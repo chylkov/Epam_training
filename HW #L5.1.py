@@ -6,8 +6,24 @@
 # Homework
 import random
 
+class MatrixError(Exception):
+    """ An exception class for Matrix """
+    pass
+
 class Matrix:
+    
+    """
+    Класс матриц. Матрицу можно задавать двумя способами:
+    1) задать количество строк и количество столбцов, тогда матрица создается случайным образом, 
+    где каждый элемент матрицы будет равномерно распределен на интервале от -100 до 100
+    
+    2) задать матрицу в виде списка
+    
+    
+    """
+    
     def __init__(self, arg1 = None, arg2 = None):
+        
 
                
         if (arg1 is not None) and (arg2 is not None) :
@@ -26,10 +42,20 @@ class Matrix:
             self.value = arg1
             self.number_rows = len(arg1)
             self.number_columns = len(arg1[0])
+        
+        else:
+            raise MatrixError("Use another way to make matrix")
             
             
     def __add__(self, other):
-        if self.number_rows == other.number_rows:
+            
+        """
+        Сложение матриц
+   
+        """
+        if self.number_rows != other.number_rows:
+            raise MatrixError("Trying to add matrixes of varying rank!")
+        else:
             value = []
             for i in range(self.number_rows):
                 row=[]
@@ -38,11 +64,18 @@ class Matrix:
                 value.append(row)     
 
             return Matrix(value)
-        else:
-            print("Matrixes must be the same size")
+
+
+                
+
             
             
     def __sub__(self, other):
+        
+        """
+        Вычитание матриц
+   
+        """
         value = []
         for i in range(self.number_rows):
             row=[]
@@ -54,6 +87,11 @@ class Matrix:
     
     
     def __mul__(self, other):
+        
+        """
+        Умножение матрицы на матрицу или умножение матрицы на число (слева на право)
+   
+        """
         value = []
         if str(other).isdigit():
  
@@ -62,11 +100,35 @@ class Matrix:
                 for j in range(self.number_columns):
 
                     row.append(self.value[i][j] *other)
-                value.append(row)     
+                value.append(row)
+            return Matrix(value)
+                
+        elif self.number_columns == other.number_rows :
+            
+            for i in range(self.number_rows):
+                row=[]
+                for j in range(other.number_columns):
+                    summa = 0
+                    for k in range(self.number_columns):
+                        summa = summa + self.value[i][k] * other.value[k][j]
+                    row.append(summa)   
 
-        return Matrix(value)
+                value.append(row)
+                
+            return Matrix(value)
+        else:
+            raise MatrixError("Check the size of matrix")
+        
+        
+    
+    
     
     def __rmul__(self, other):
+        
+        """
+        Умножение матрицы на матрицу или умножение числа на матрицу (справа на лево)
+   
+        """
         value = []
         if str(other).isdigit():
  
@@ -81,39 +143,61 @@ class Matrix:
     
 
     def __eq__(self, other):
+        
+        """
+        Проверка равны ли две матрицы
+   
+        """
         for i in range(self.number_rows):
             for j in range(self.number_columns):
                 if self.value[i][j] != other.value[i][j]:
+                    return False
                     break
-                    
-            return True
-        
+    
         else:
-            return False
+            return True
+            
         
         
     def is_squared(self):
+        
+        """
+        Проверка является ли матрица квадратной
+   
+        """
         if self.number_columns == self.number_rows:
             return True
         else:
             return False
         
     def is_symmetric(self):
-        if self.number_columns == self.number_rows:
+        
+        """
+        Проверка является ли квадратная матрица симметричной
+   
+        """
+        if self.number_rows != self.number_columns:
+            raise MatrixError("Matrix is not squared")
+        
+        else:
             for i in range(self.number_rows):
                 for j in range(self.number_columns):
-                    if self.value[i][j] == self.value[j][i]:
+                    if self.value[i][j] != self.value[j][i]:
+                        return False
                         break
-
-                return False
+                        
 
             else:
                 return True
-        else:
-            return "Matrix is not squared"
+
         
         
     def transp(self):
+        
+        """
+        Транспонирование матрицы
+   
+        """
         value = []
         for i in range(self.number_columns):
             row=[]

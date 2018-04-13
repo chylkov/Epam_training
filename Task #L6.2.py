@@ -3,47 +3,95 @@
 
 # In[ ]:
 
-# Task L6.2
-
 import abc
 
 class Vehicle(metaclass=abc.ABCMeta):
-    
-    def __init__(self, year_made, model, number_wheels, base_price, mileage, price):
-        self.year_made = year_made
+    """
+    Абстрактный класс описывающий транспортное средство
+    """
+    def __init__(self, wheel, model, year, mileage, base_price):
+        self.wheel = wheel
+        self.year = year
         self.model = model
-        self.number_wheels = number_wheels
-        self.base_price = base_price
         self.mileage = mileage
-        
-    
-    @abstractmethod
-    def vehicle_type():
+        self.base_price = base_price
+
+    @abc.abstractmethod
+    def vehicle_type(self):
+        """
+        Абстрактная функция возвращающая тип транспортного средства
+        :return: str
+        """
         pass
-    
-    @abstractmethod
-    def is_motorcycle(self):
-        pass     
-    
-    @abstractproperty
-    def purchase_price(self):
-        self.price = self.base_price - 0.1 * self.mileage
-        
-    
-    
-class Truck(Vehicle):
-    def __init__(self):
-        super(Vehicle, self).__init__(year_made, model, number_wheels, base_price, mileage, price)
+
+    @property
+    def is_motocycle(self):
+        """
+        Функция показывающая является ли тарнспортноесредство мотоциклом или нет
+        :return:bool
+        """
+        return self.wheel == 2
+
+    @property
+    def price(self):
+        """
+        Рассчитывает стоимость транспортного средства
+        """
+        return self.base_price - 0.1 * self.mileage
+
 
 class Car(Vehicle):
-    def __init__(self):
-        super(Vehicle, self).__init__(year_made, model, number_wheels, base_price, mileage, price)
-        
+    """
+    Класс машины
+    """
+    def __init__(self, model, year, mileage, base_price):
+        super().__init__(4, model, year, mileage, base_price)
+
+
+    def vehicle_type(self):
+        return "Car"
+
+
 class Motocycle(Vehicle):
-    def __init__(self):
-        super(Vehicle, self).__init__(year_made, model, number_wheels, base_price, mileage, price)
+    """
+    Класс мотоцикла
+    """
+    def __init__(self, model, year, mileage, base_price):
+        super().__init__(2, model, year, mileage, base_price)
+
+
+    def vehicle_type(self):
+        return "Motocycle"
+
+
+class Truck(Vehicle):
+    """
+    Класс тягочей
+    """
+    def __init__(self, model, year, mileage, base_price):
+        super().__init__(6, model, year, mileage, base_price)
+
+
+    def vehicle_type(self):
+        return "Truck"
+
 
 class Bus(Vehicle):
-    def __init__(self):
-        super(Vehicle, self).__init__(year_made, model, number_wheels, base_price, mileage, price)
+    """
+    Класс автобусов
+    """
+    def __init__(self, model, year, mileage, base_price):
+        super().__init__(8, model, year, mileage, base_price)
+
+
+    def vehicle_type(self):
+        return "Bus"
+
+
+if __name__ == '__main__':
+    honda = Motocycle("Honda", 2018, 10000, 1 * 10e6)
+
+    print("motocycle type: ", honda.vehicle_type())
+    print("is motocycle: ", honda.is_motocycle)
+    print("purchase: ", honda.price)
 

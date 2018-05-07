@@ -17,9 +17,9 @@ def get_input():
 
 def get_area_triangle_from_point():
     """
-    Returns area of triangle. User inputs points as cootdinates.
+    Returns area of triangle.
 
-    :return: float or None -- returns area of triangle if input is correct
+    :return: float or None -- returns area of triangle
     """
     res_input = get_vertex_triangle()
     if (not res_input[0]):
@@ -30,7 +30,7 @@ def get_area_triangle_from_point():
 
 def get_vertex_triangle():
     """
-    Get points of vertex from user.
+    Get points from user.
 
     :return: tuple(bool,list) -- if first arg is true - then correct input, else.
     """
@@ -65,7 +65,7 @@ def calculate_area_triangle(vertex: list) -> float:
     """
     Calculates area of triangles
 
-    :param vertex: list of points of vertex.
+    :param vertex: list of points
     :type value: list of lists
     :return: float -- area of triangles
 
@@ -141,5 +141,3 @@ def is_vertex_triangle(vertex):
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
-    #print(get_area_triangle_from_point())
-    #print(calculate_area_triangle([[0,0],[1,0],[0,2]]))

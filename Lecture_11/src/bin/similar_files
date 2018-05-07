@@ -1,0 +1,33 @@
+#! /usr/bin/env python
+
+"""
+Similar files finder entrypoint
+
+"""
+
+import argparse
+from supertool import similar_files
+
+if __name__=='__main__':
+    #получаем от пользователя директорию
+    parser = argparse.ArgumentParser(description='Find similar files')
+    parser.add_argument('directory',type=str,help='target_directory')
+    args = parser.parse_args()
+
+    #поиск одинаковых файлов
+    res=similar_files.work(args.directory)
+
+    if(len(res) != 0):
+
+        print("Similar files:")
+
+        for similar_files in res:
+            print('\n')
+            for files in similar_files:
+                print(files)
+
+            print("-------------------------------------------")
+            print("Count:",len(similar_files))
+    else:
+
+        print("Similar files not found")

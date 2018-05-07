@@ -27,7 +27,7 @@ class Test_calculate_area_triangle(unittest.TestCase):
     def test_incorrect_args_not_float_nonpositive(self):
         """
         Negative test.
-        Checks exception if user entered not a number
+        Checks exception if data is not numeric
 
         """
         with self.assertRaises(ValueError) as raised_exception:
@@ -37,7 +37,7 @@ class Test_calculate_area_triangle(unittest.TestCase):
     def test_incoorect_agrs_wrong_len_vertex_nonpositive(self):
         """
         Negative test.
-        Checks exception if user entered not tree vertex
+        Checks exception if user entered not tree point
 
         """
         with self.assertRaises(ValueError) as raised_exception:
@@ -48,7 +48,7 @@ class Test_calculate_area_triangle(unittest.TestCase):
     def test_incorrect_args_wrong_len_coordinats_nonpositive(self):
         """
         Negative test.
-        Checks exception if user entered not two coordinates of vertex
+        Checks exception if user entered not two coordinates of point
 
         """
 
@@ -60,12 +60,12 @@ class Test_calculate_area_triangle(unittest.TestCase):
     def test_incorrect_collinear_vertex_nonpositive(self):
         """
         Negative test.
-        Checks exception if user entered vertex is a collinear
+        Checks exception if user entered not triangle point
 
         """
         with self.assertRaises(ValueError) as raised_exception:
             calculate_area_triangle([[0, 0], [0, 0], [0, 0]])
-        self.assertEqual(raised_exception.exception.args[0], "Vertex can't to be vertex triangle. Vertex is collinear")
+        self.assertEqual(raised_exception.exception.args[0], "Vertex can't to be vertex triangle")
 
 
 class Test_is_vertex_triangle(unittest.TestCase):
@@ -91,21 +91,10 @@ class Test_is_vertex_triangle(unittest.TestCase):
             is_vertex_triangle([[0, 'a'], [1, 0], [0, 2]])
         self.assertEqual(raised_exception.exception.args[0], "[0, 'a']: coordinats must be number")
 
-    def test_incorrect_agrs_wrong_len_vertex_nonpositive(self):
-        """
-            Negative test.
-            Checks exception if user entered not two coordinates of vertex
-
-        """
-        with self.assertRaises(ValueError) as raised_exception:
-            is_vertex_triangle([[0, 0], [1, 0], [0, 2], [0, 3]])
-        self.assertEqual(raised_exception.exception.args[0],
-                         "Incorrect format vertex. Inputed 4 points. Needs 3 points")
-
     def test_incorrect_args_wrong_len_coordinats_nonpositive(self):
         """
             Negative test.
-            Checks exception if user entered not two coordinates of vertex
+            Checks exception if user entered not two coordinates of point
 
         """
         with self.assertRaises(ValueError) as raised_exception:
@@ -122,6 +111,20 @@ class Test_is_vertex_triangle(unittest.TestCase):
         with self.assertRaises(ValueError) as raised_exception:
             is_vertex_triangle([[0, 0], [0, 0], [0, 0]])
         self.assertEqual(raised_exception.exception.args[0], "Vertex can't to be vertex triangle. Vertex is collinear")
+
+
+
+    def test_incorrect_agrs_wrong_len_vertex_nonpositive(self):
+        """
+            Negative test.
+            Checks exception if user entered not two coordinates of point
+
+        """
+        with self.assertRaises(ValueError) as raised_exception:
+            is_vertex_triangle([[0, 0], [1, 0], [0, 2], [0, 3]])
+        self.assertEqual(raised_exception.exception.args[0],
+                         "Incorrect format vertex. Inputed 4 points. Needs 3 points")
+
 
 
 class Test_get_vertex_triangle(unittest.TestCase):
@@ -161,7 +164,7 @@ class Test_get_vertex_triangle(unittest.TestCase):
     def test_incorrect_input_wrong_len_coordinats_nonpositive(self, mock_stdout):
         """
             Negative test.
-            Checks exception if user entered not two coordinates of vertex
+            Checks exception if user entered not two coordinates of point
 
         """
         with patch('src.area_of_triangle.get_input', MagicMock(side_effect=['0 0 1', '0 1', '2 0'])):
@@ -175,7 +178,7 @@ class Test_get_vertex_triangle(unittest.TestCase):
     def test_incorrect_input_collinear_vertex_nonpositive(self, mock_stdout):
         """
             Negative test.
-            Checks exception if user entered vertex is a collinear
+            Checks exception if user entered point is a collinear
 
         """
         with patch('src.area_of_triangle.get_input', MagicMock(side_effect=['0 0 ', '0 0', '0 0'])):
